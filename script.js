@@ -15,7 +15,7 @@ function whoWins(playerSelection, computerSelection) {
     }
 
     switch (playerSelection) {
-        case 1: {
+        case 1:
             if (computerSelection == 2) {
                 return 1;
             }
@@ -23,8 +23,8 @@ function whoWins(playerSelection, computerSelection) {
                 return 0;
             }
             break;
-        }
-        case 2: {
+
+        case 2:
             if (computerSelection == 1) {
                 return 0;
             }
@@ -32,8 +32,8 @@ function whoWins(playerSelection, computerSelection) {
                 return 1;
             }
             break;
-        }
-        case 3: {
+
+        case 3:
             if (computerSelection == 1) {
                 return 1;
             }
@@ -41,9 +41,8 @@ function whoWins(playerSelection, computerSelection) {
                 return 0;
             }
             break;
-        }
-        default:
-            return 2;
+
+
     }
 }
 
@@ -89,30 +88,30 @@ document.querySelectorAll('#options>button').
     forEach((button) => {
         button.addEventListener('click', function (event) {
             const userButton = event.target;
-            const userChoice = userButton.value;
-            paintChosenButton(event.target, 'grey');
+            const userChoice = Number(userButton.value);
 
             const pcChoice = getComputerChoice();
             const pcButton = document.querySelector(`#pcOptions button[value="${pcChoice}"]`);
-            setTimeout(function () {
-                paintChosenButton(pcButton, 'grey')
-            }, 500);
+
             const userWins = whoWins(userChoice, pcChoice);
             let resultText = '';
-            switch (userWins) {
-                case 1: {
+            switch (Number(userWins)) {
+                case 1:
                     paintChosenButton(userButton, 'green');
                     paintChosenButton(pcButton, 'red');
                     resultText = createResultText(userChoice, pcChoice);
-                }
-                case 0: {
+                    break;
+
+                case 0:
                     paintChosenButton(userButton, 'red');
                     paintChosenButton(pcButton, 'green');
                     resultText = createResultText(pcChoice, userChoice);
-                }
-                case 2: {
+                    break;
+
+                case 2:
                     resultText = createResultText(userChoice, pcChoice);
-                }
+                    break;
+
             }
 
             const resultDiv = document.getElementById('result');
