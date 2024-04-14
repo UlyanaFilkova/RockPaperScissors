@@ -84,6 +84,43 @@ function createResultText(winner, loser) {
     return text;
 }
 
+
+
+function checkMaxScore() {
+    let maxScore = Number(document.getElementById('maxScore').value);
+    let userScore = Number(document.getElementById('userScore').textContent);
+    let pcScore = Number(document.getElementById('pcScore').textContent);
+
+    if (userScore >= maxScore) {
+        return 1;
+    }
+    else if (pcScore >= maxScore) {
+        return 0;
+    }
+    return -1;
+}
+
+function showWinner(winnerNum) {
+    let finalResult = document.createElement('h2');
+
+
+    let resultMessage = '';
+    if (winnerNum === 1) {
+        resultMessage = 'Вы выиграли!';
+        finalResult.style.color = 'green';
+    } else if (winnerNum === 0) {
+        resultMessage = 'Вы проиграли!';
+        finalResult.style.color = 'red';
+    }
+    finalResult.textContent = resultMessage;
+    document.getElementById('result').after(finalResult);
+}
+
+function suggestNewGame() {
+    document.getElementById('userScore').textContent = 0;
+    document.getElementById('pcScore').textContent = 0;
+}
+
 document.querySelectorAll('#options>button').
     forEach((button) => {
         button.addEventListener('click', function (event) {
@@ -100,12 +137,17 @@ document.querySelectorAll('#options>button').
                     paintChosenButton(userButton, 'green');
                     paintChosenButton(pcButton, 'red');
                     resultText = createResultText(userChoice, pcChoice);
+                    let userScore = document.getElementById('userScore');
+                    let scoreNum = Number(userScore.textContent) + 1;
+                    userScore.textContent = scoreNum;
                     break;
 
                 case 0:
                     paintChosenButton(userButton, 'red');
                     paintChosenButton(pcButton, 'green');
                     resultText = createResultText(pcChoice, userChoice);
+                    let pcScore = document.getElementById('pcScore');
+                    pcScore.textContent = Number(pcScore.textContent) + 1;
                     break;
 
                 case 2:
@@ -116,6 +158,13 @@ document.querySelectorAll('#options>button').
 
             const resultDiv = document.getElementById('result');
             resultDiv.textContent = resultText;
+
+            let resultOfRound = checkMaxScore();
+            if (resultOfRound !== -1) {
+                showWinner(resultOfRound);
+                suggestNewGame();
+            }
+
         });
     });
 
