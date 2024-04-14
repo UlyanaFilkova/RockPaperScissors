@@ -6,6 +6,13 @@ function paintChosenButton(button, color) {
     button.style.backgroundColor = color;
 }
 
+function clearButtonPainting() {
+    document.querySelectorAll('#options>button').
+        forEach((button) => paintChosenButton(button, '#ccc'));
+    document.querySelectorAll('#pcOptions>button').
+        forEach((button) => paintChosenButton(button, '#ccc'));
+}
+
 //   игрок победил 1
 //   компьютер победил 0
 //   ничья (одинаково) 2
@@ -124,6 +131,8 @@ function suggestNewGame() {
 document.querySelectorAll('#options>button').
     forEach((button) => {
         button.addEventListener('click', function (event) {
+            clearButtonPainting();
+
             const userButton = event.target;
             const userChoice = Number(userButton.value);
 
@@ -151,6 +160,8 @@ document.querySelectorAll('#options>button').
                     break;
 
                 case 2:
+                    paintChosenButton(userButton, 'grey');
+                    paintChosenButton(pcButton, 'grey');
                     resultText = createResultText(userChoice, pcChoice);
                     break;
 
